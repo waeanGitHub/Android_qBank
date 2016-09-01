@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.waean.asus.android_qbank.GuidedActivity">
+
+    <ImageView
+        android:id="@+id/img_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/welcome_ad"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/main_bg"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="#ff0000"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="AndRoid题库"
+            android:textColor="@android:color/white"
+            android:textSize="28dp"
+            android:textStyle="bold|italic"/>
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_1"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/tv_1"
+            android:text="有态度的题库软件"
+            android:textColor="@color/text_color"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Copyright © 2014–2015  ITVK.CN"
+            android:textColor="@color/text_color"
+            android:textSize="14dp"/>
+    </RelativeLayout>
+</LinearLayout>

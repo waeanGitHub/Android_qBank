@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.waean.asus.android_qbank.MainActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/loginToolBar"
+        android:minHeight="?attr/actionBarSize"/>
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dl_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_toolbar"
+        >
+        <!--此处不能用fragment ，会照成页面空白-->
+        <FrameLayout
+            android:id="@+id/mFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="240dp"
+                android:layout_height="160dp"
+                android:background="@mipmap/home_nav_title">
+
+                <view.CircleImageView
+                    android:id="@+id/img_head"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/hugh"/>
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img_head"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_horizontal"
+                    android:text="xiaoli"
+                    android:textColor="@android:color/white"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_sort"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:drawableLeft="@mipmap/home_nav_icon01"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:text="分类练习"/>
+
+            <TextView
+                android:id="@+id/tv_search"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
+                android:drawableLeft="@mipmap/home_nav_icon02"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:text="题目查找"/>
+
+            <TextView
+                android:id="@+id/tv_achievement"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
+                android:drawableLeft="@mipmap/home_nav_icon03"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:text="我的成就"/>
+
+            <TextView
+                android:id="@+id/tv_collect"
+                android:layout_width="240dp"
+                android:layout_height="60dp"
+                android:drawableLeft="@mipmap/home_nav_icon04"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:text="我的收藏"/>
+
+            <RelativeLayout
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_settings_grey600_18dp"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="设置"/>
+
+                <TextView
+                    android:id="@+id/tv_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawableLeft="@mipmap/ic_exit_to_app_grey600_18dp"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="退出"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>
