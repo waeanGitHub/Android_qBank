@@ -62,6 +62,8 @@ public class QuestionActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(QuestionActivity.this, QuestionItemActivity.class);
                     int id = questionInfos.get(i).getId();
+                    intent.putExtra("size", questionInfos.size());
+                    intent.putExtra("where", i);
                     intent.putExtra("id", id);
                     startActivity(intent);
 

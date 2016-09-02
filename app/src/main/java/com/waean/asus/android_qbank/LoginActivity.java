@@ -19,6 +19,8 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import pojo.UserInfo;
+
 @ContentView(value = R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
     /*登录url*/
@@ -52,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
     private void loginAccount(String mUsername, String mPassword) {
 
 
-
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("username", mUsername);
         requestParams.addParameter("password", mPassword);
@@ -67,6 +68,20 @@ public class LoginActivity extends AppCompatActivity {
                     String success = jsonObject.getString("success");
                     switch (success) {
                         case "true":
+                            UserInfo userInfo = UserInfo.getUserInfo();
+                            JSONObject object = new JSONObject(jsonObject.getString("user"));
+                            int id = object.getInt("id");
+                            String username = object.getString("username");
+                            String nickname = object.getString("nickname");
+                            String passwoed = object.getString("password");
+                            String telephone = object.getString("telephone");
+                            userInfo.setId(id);
+                            userInfo.setUsername(username);
+                            userInfo.setNickname(nickname);
+                            userInfo.setPassword(passwoed);
+                            userInfo.setTelephone(telephone);
+
+                            Log.i("LoginActivity", "onSuccess: " + userInfo.toString());
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             break;
