@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        android:text="答案"
+        android:textSize="18dp"/>
+
+    <TextView
+        android:textColor="@android:color/black"
+        android:id="@+id/mQuerstion_tv_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="6dp"
+        android:padding="12dp"
+        android:text="answesssssssssssssssssssssssssssssssssssr"
+        android:textSize="20dp"/>
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <CheckBox
+        android:id="@+id/check01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="answer1"
+        android:textColor="@android:color/black"/>
+
+    <CheckBox
+        android:id="@+id/check02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="answer2"
+        android:textColor="@android:color/black"/>
+
+    <CheckBox
+        android:id="@+id/check03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="answer3"
+        android:textColor="@android:color/black"/>
+
+    <CheckBox
+        android:id="@+id/check04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="answer4"
+        android:textColor="@android:color/black"/>
+
+</LinearLayout>
