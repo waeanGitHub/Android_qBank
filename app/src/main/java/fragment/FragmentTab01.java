@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ import pojo.SortInfo;
 public class FragmentTab01 extends Fragment {
     private static final String TAG = "FragmentTab01";
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private GridView gridView;
     private List<SortInfo> list;
 
@@ -52,6 +55,7 @@ public class FragmentTab01 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_layout, null);
         gridView = (GridView) view.findViewById(R.id.mGridview);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.mSwipeRefreshLayout);
         getData();
         return view;
     }
@@ -69,6 +73,20 @@ public class FragmentTab01 extends Fragment {
 
 
         });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+
+
         super.onStart();
     }
 

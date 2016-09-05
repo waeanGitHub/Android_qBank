@@ -2,7 +2,9 @@ package com.waean.asus.android_qbank;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +29,8 @@ import pojo.QuestionInfo;
 public class QuestionActivity extends AppCompatActivity {
     private static final String TAG = "QuestionActivity";
 
+    @ViewInject(value = R.id.mSwipeRefreshLayout)
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     @ViewInject(value = R.id.question_toolbar)
     private Toolbar mToolBar;
 
@@ -75,6 +79,19 @@ public class QuestionActivity extends AppCompatActivity {
 
 
         Log.i(TAG, "onCreate: " + questionInfos.get(0).toString());
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+
     }
 
     @Override

@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,9 @@ import pojo.UserInfo;
 public class FragmentTab04 extends Fragment {
     public static final String TAG = "FragmentTab04";
     private static final String url = "http://115.29.136.118:8080/web-question/app/mng/store?method=list";
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     private ListView mListView;
     private Intent intent;
     List<QuestionInfo> questionInfos;
@@ -47,8 +52,25 @@ public class FragmentTab04 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.collect_layout, null);
         mListView = (ListView) view.findViewById(R.id.colect_listview);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.mSwipeRefreshLayout);
         getData();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+        super.onStart();
     }
 
     private void getData() {

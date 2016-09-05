@@ -1,9 +1,16 @@
 package com.waean.asus.android_qbank;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,13 +42,43 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forget;
     @ViewInject(value = R.id.tv_register)
     private TextView register;
+    private SharedPreferences preferences;
+    //    ClearReceiver receiver;
+    private AlertDialog show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_login);
         x.view().inject(this);
+//        registerClearReceiver();
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        String mUsername = preferences.getString("username", null);
+        String mPassword = preferences.getString("password", null);
+        Log.i("info", "onCreate: " + mUsername + ":" + mPassword);
+        if (!TextUtils.isEmpty(mUsername) && !TextUtils.isEmpty(mPassword)) {
+            Log.i("info", "onCreate: is called");
+            loginAccount(mUsername, mPassword);
+        }
+
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        unregisterReceiver(receiver);
+    }
+
+//    /*注册receiver */
+//    private void registerClearReceiver() {
+//        receiver = new ClearReceiver();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("remember");
+//        filter.addAction("clear");
+//        LoginActivity.this.registerReceiver(receiver, filter);
+//    }
+
 
     @Event(value = R.id.btn_login, type = View.OnClickListener.class)
     private void Onclick(View view) {
@@ -49,11 +86,12 @@ public class LoginActivity extends AppCompatActivity {
         String mUsername = username.getText().toString();
         String mPassword = password.getText().toString();
         loginAccount(mUsername, mPassword);
+
     }
 
     private void loginAccount(String mUsername, String mPassword) {
 
-
+        showPrograss();
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("username", mUsername);
         requestParams.addParameter("password", mPassword);
@@ -73,17 +111,19 @@ public class LoginActivity extends AppCompatActivity {
                             int id = object.getInt("id");
                             String username = object.getString("username");
                             String nickname = object.getString("nickname");
-                            String passwoed = object.getString("password");
+                            String password = object.getString("password");
                             String telephone = object.getString("telephone");
                             userInfo.setId(id);
                             userInfo.setUsername(username);
                             userInfo.setNickname(nickname);
-                            userInfo.setPassword(passwoed);
+                            userInfo.setPassword(password);
                             userInfo.setTelephone(telephone);
 
                             Log.i("LoginActivity", "onSuccess: " + userInfo.toString());
+                            recodeLogin(username, password);
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
                             break;
                         case "false":
                             String reason = jsonObject.getString("reason");
@@ -110,11 +150,40 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-
+                show.dismiss();
             }
         });
 
     }
+
+    private void showPrograss() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_item, null);
+        builder.setView(view);
+        show = builder.show();
+    }
+
+    private void recodeLogin(String username, String password) {
+        preferences = getSharedPreferences("user", MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString("username", username);
+        edit.putString("password", password);
+        edit.commit();
+    }
+
+
+//    class ClearReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if (intent.getAction().equals("clear")) {
+//                preferences.edit().clear().commit();
+//                Log.i("info", "onReceive: is called ================");
+//            } else if (intent.getAction().equals("remember")) {
+//                recodeLogin(UserInfo.getUserInfo().getUsername(), UserInfo.getUserInfo().getPassword());
+//            }
+//        }
+//    }
 
     @Event(value = {R.id.tv_forget, R.id.tv_register}, type = View.OnClickListener.class)
     private void clickTextView(View view) {

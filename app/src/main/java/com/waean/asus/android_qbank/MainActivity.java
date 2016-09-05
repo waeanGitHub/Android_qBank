@@ -3,8 +3,11 @@ package com.waean.asus.android_qbank;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle toggle;
 
+    MyReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
         x.view().inject(this);
 
+        /*注册退出登录广播*/
+        registerBroadcast();
         mToolbar.setTitle("分类练习");
         mToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolbar);
@@ -78,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
+
+
+    }
+
+    private void registerBroadcast() {
+        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("exit");
+        MainActivity.this.registerReceiver(myReceiver, filter);
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,10 +164,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "我的收藏", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_setting:
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 Toast.makeText(MainActivity.this, "设置", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_exit:
                 Toast.makeText(MainActivity.this, "退出", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
 
 
@@ -164,6 +189,17 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawer(Gravity.LEFT);
         } else {
             mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+    }
+
+
+    class MyReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("exit")) {
+                finish();
+            }
         }
     }
 
