@@ -30,6 +30,7 @@ import org.xutils.x;
 
 import fragment.FragmentTab01;
 import fragment.FragmentTab04;
+import pojo.UserInfo;
 
 @ContentView(value = R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
@@ -55,10 +56,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView mSetting;
     @ViewInject(value = R.id.tv_exit)
     private TextView mExit;
+    @ViewInject(value = R.id.tv_nickname)
+    private TextView tv_nickname;
 
     private ActionBarDrawerToggle toggle;
 
+
     MyReceiver myReceiver;
+    /*private Toolbar mToolbar;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
         x.view().inject(this);
+        tv_nickname.setText(UserInfo.getUserInfo().getNickname());
+        /*mToolbar = (Toolbar) findViewById(R.id.main_toolbar);*/
 
         /*注册退出登录广播*/
         registerBroadcast();
@@ -75,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open_drawer, R.string.close_drawer);
+        toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                drawerView.setClickable(true);
+            }
+        };
         toggle.syncState();
         mDrawerLayout.setDrawerListener(toggle);
 

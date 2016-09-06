@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,6 +60,15 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    private void addfoot() {
+        TextView view = new TextView(this);
+        view.setText("已加载全部");
+        view.setGravity(Gravity.CENTER);
+        mListView.setFooterDividersEnabled(false);
+        mListView.addFooterView(view);
+    }
+
+
     @Event(value = R.id.tv_mSearch, type = View.OnClickListener.class)
     private void OnClick(View view) {
         switch (view.getId()) {
@@ -105,6 +115,7 @@ public class SearchActivity extends AppCompatActivity {
                         if (questionInfos.size() != 0) {
                             QuestionAdapter adapter = new QuestionAdapter(SearchActivity.this, questionInfos);
                             mListView.setAdapter(adapter);
+                            addfoot();
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

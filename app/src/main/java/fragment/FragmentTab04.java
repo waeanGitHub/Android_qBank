@@ -8,11 +8,13 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.waean.asus.android_qbank.QuestionActivity;
@@ -121,6 +123,7 @@ public class FragmentTab04 extends Fragment {
                         if (questionInfos.size() != 0) {
                             QuestionAdapter adapter = new QuestionAdapter(getActivity(), questionInfos);
                             mListView.setAdapter(adapter);
+                            addfoot();
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -159,5 +162,12 @@ public class FragmentTab04 extends Fragment {
 
     }
 
+    private void addfoot() {
+        TextView view = new TextView(getActivity());
+        view.setText("已加载全部");
+        view.setGravity(Gravity.CENTER);
+        mListView.setFooterDividersEnabled(false);
+        mListView.addFooterView(view);
+    }
 
 }

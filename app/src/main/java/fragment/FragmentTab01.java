@@ -56,6 +56,7 @@ public class FragmentTab01 extends Fragment {
         view = inflater.inflate(R.layout.main_layout, null);
         gridView = (GridView) view.findViewById(R.id.mGridview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.mSwipeRefreshLayout);
+        list = new ArrayList<SortInfo>();
         getData();
         return view;
     }
@@ -77,12 +78,14 @@ public class FragmentTab01 extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 3000);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mSwipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }, 3000);
+                getData();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -147,7 +150,6 @@ public class FragmentTab01 extends Fragment {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                list = new ArrayList<SortInfo>();
 
                 try {
                     JSONArray jsonArray = new JSONArray(result);

@@ -7,11 +7,9 @@
     android:orientation="vertical"
     tools:context="com.waean.asus.android_qbank.SettingActivity">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/setting_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/loginToolBar"/>
+        layout="@layout/toolbar"/>
 
     <TextView
         android:layout_width="match_parent"

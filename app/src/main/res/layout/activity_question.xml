@@ -7,22 +7,21 @@
     android:orientation="vertical"
     tools:context="com.waean.asus.android_qbank.QuestionActivity">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/question_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/loginToolBar"/>
+        layout="@layout/toolbar"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/mSwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/question_toolbar">
 
         <ListView
             android:id="@+id/question_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

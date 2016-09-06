@@ -7,11 +7,9 @@
     android:background="@color/backgroud"
     tools:context="com.waean.asus.android_qbank.QuestionItemActivity">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/questionitem_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/loginToolBar"/>
+        layout="@layout/toolbar"/>
 
     <TextView
         android:id="@+id/question_tv_title"

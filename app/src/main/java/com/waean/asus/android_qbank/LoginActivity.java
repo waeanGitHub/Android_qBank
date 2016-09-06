@@ -5,15 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +37,8 @@ import pojo.UserInfo;
 public class LoginActivity extends AppCompatActivity {
     /*登录url*/
     private static final String url = "http://115.29.136.118:8080/web-question/app/login";
+    @ViewInject(value = R.id.login_toolbar)
+    private Toolbar mToolbar;
     @ViewInject(value = R.id.et_username)
     private EditText username;
     @ViewInject(value = R.id.et_password)
@@ -45,21 +52,20 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     //    ClearReceiver receiver;
     private AlertDialog show;
+    private PopupWindow pWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_login);
         x.view().inject(this);
+
+        mToolbar.setTitle("登录");
+        setSupportActionBar(mToolbar);
+
+
 //        registerClearReceiver();
-        preferences = getSharedPreferences("user", MODE_PRIVATE);
-        String mUsername = preferences.getString("username", null);
-        String mPassword = preferences.getString("password", null);
-        Log.i("info", "onCreate: " + mUsername + ":" + mPassword);
-        if (!TextUtils.isEmpty(mUsername) && !TextUtils.isEmpty(mPassword)) {
-            Log.i("info", "onCreate: is called");
-            loginAccount(mUsername, mPassword);
-        }
+
 
 
     }
@@ -91,7 +97,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginAccount(String mUsername, String mPassword) {
 
-        showPrograss();
+        if (flag) {
+            showpupWin();
+        }
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("username", mUsername);
         requestParams.addParameter("password", mPassword);
@@ -150,18 +158,18 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-                show.dismiss();
+                pWindow.dismiss();
             }
         });
 
     }
 
-    private void showPrograss() {
+   /* private void showPrograss() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_item, null);
         builder.setView(view);
         show = builder.show();
-    }
+    }*/
 
     private void recodeLogin(String username, String password) {
         preferences = getSharedPreferences("user", MODE_PRIVATE);
@@ -198,4 +206,27 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void showpupWin() {
+        View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_item, null);
+        pWindow = new PopupWindow(view,
+                400, 400, true);
+        pWindow.setBackgroundDrawable(new BitmapDrawable());// 为了让对话框点击空白处消失，必须有这条语句
+        pWindow.showAtLocation((ViewGroup) LoginActivity.this.findViewById(android.R.id.content), Gravity.CENTER, 0, 0);
+    }
+
+    /**
+     * 这个函数在Activity创建完成之后会调用。悬浮窗需要依附在Activity上，如果Activity还没有完全建好就去
+     * 调用showCartFloatView()，则会抛出异常
+     *
+     * @param hasFocus
+     */
+    boolean flag = false;
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            flag = true;
+        }
+    }
 }
